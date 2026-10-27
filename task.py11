@@ -1,0 +1,43 @@
+print("Hostel Resource Report")
+
+# Each room contains electricity units and water units.
+floors = [
+    [[120, 80], [150, 100]],
+    [[90, 70], [180, 120]],
+]
+
+electricity_rate = 8
+water_rate = 2
+electricity_limit = 160
+water_limit = 100
+
+electricity_totals = []
+water_totals = []
+
+for floor_number in range(len(floors)):
+    electricity_total = 0
+    water_total = 0
+    print("\nFloor", floor_number + 1)
+
+    for room_number in range(len(floors[floor_number])):
+        electricity = floors[floor_number][room_number][0]
+        water = floors[floor_number][room_number][1]
+        charge = electricity * electricity_rate + water * water_rate
+
+        print("Room", room_number + 1, "charge: Rs.", charge)
+
+        if electricity > electricity_limit:
+            print("Electricity limit exceeded.")
+        if water > water_limit:
+            print("Water limit exceeded.")
+
+        electricity_total += electricity
+        water_total += water
+
+    electricity_totals.append(electricity_total)
+    water_totals.append(water_total)
+    print("Floor electricity:", electricity_total, "units")
+    print("Floor water:", water_total, "units")
+
+print("\nFloor with most electricity:", electricity_totals.index(max(electricity_totals)) + 1)
+print("Floor with most water:", water_totals.index(max(water_totals)) + 1)
