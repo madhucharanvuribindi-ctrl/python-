@@ -1,0 +1,42 @@
+print("Branch Expense Report")
+
+branches = ["North", "South", "East"]
+categories = ["Rent", "Salary", "Supplies"]
+
+# Each branch has three categories, and each category has expenses for 3 months.
+expenses = [
+    [[1000, 1100, 1050], [3000, 3200, 3100], [500, 450, 600]],
+    [[900, 950, 1000], [2800, 2900, 3000], [700, 650, 750]],
+    [[1200, 1150, 1250], [3300, 3400, 3350], [400, 500, 450]],
+]
+
+branch_totals = []
+category_totals = [0, 0, 0]
+highest_total = 0
+highest_branch = ""
+highest_category = ""
+
+for i in range(len(branches)):
+    branch_total = 0
+
+    for j in range(len(categories)):
+        category_total = sum(expenses[i][j])
+        branch_total = branch_total + category_total
+        category_totals[j] = category_totals[j] + category_total
+
+        if category_total > highest_total:
+            highest_total = category_total
+            highest_branch = branches[i]
+            highest_category = categories[j]
+
+    branch_totals.append(branch_total)
+    print(branches[i], "total:", branch_total)
+    print("Monthly average:", round(branch_total / 3, 2))
+
+print("\nCategory totals:")
+for j in range(len(categories)):
+    print(categories[j] + ":", category_totals[j])
+
+biggest_branch_number = branch_totals.index(max(branch_totals))
+print("\nBranch with highest expenses:", branches[biggest_branch_number])
+print("Largest category in one branch:", highest_category, "in", highest_branch)
