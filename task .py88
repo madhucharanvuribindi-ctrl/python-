@@ -1,0 +1,37 @@
+print("Weekly Electricity Use")
+
+appliances = ["Fridge", "TV", "Fan"]
+days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+readings = []
+
+daily_limit = int(input("Daily electricity limit (units): "))
+weekly_limit = int(input("Weekly limit per appliance (units): "))
+
+for appliance in appliances:
+    print("\nEnter units used by the", appliance)
+    week = []
+
+    for day in days:
+        units = int(input("Units on " + day + ": "))
+        week.append(units)
+
+    readings.append(week)
+
+print("\nDaily totals:")
+for day_number in range(7):
+    total = 0
+
+    for appliance_number in range(len(appliances)):
+        total = total + readings[appliance_number][day_number]
+
+    print(days[day_number] + ":", total, "units")
+    if total > daily_limit:
+        print("Daily limit exceeded!")
+
+print("\nWeekly totals:")
+for appliance_number in range(len(appliances)):
+    total = sum(readings[appliance_number])
+    print(appliances[appliance_number] + ":", total, "units")
+
+    if total > weekly_limit:
+        print("Weekly limit exceeded!")
