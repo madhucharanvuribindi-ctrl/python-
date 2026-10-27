@@ -1,0 +1,28 @@
+print("Product Price Change Report")
+
+products = ["Rice", "Milk", "Sugar"]
+prices = [
+    [50, 55, 60],
+    [30, 32, 31],
+    [40, 45, 50],
+]
+
+limit = float(input("Enter the price change limit percentage: "))
+largest_change = 0
+largest_product = ""
+
+for i in range(len(products)):
+    start_price = prices[i][0]
+    end_price = prices[i][-1]
+
+    change = (end_price - start_price) / start_price * 100
+    print(products[i], "changed by", round(change, 2), "%")
+
+    if abs(change) > largest_change:
+        largest_change = abs(change)
+        largest_product = products[i]
+
+    if abs(change) > limit:
+        print("Price change is above the limit.")
+
+print("Largest change:", largest_product, "-", round(largest_change, 2), "%")
