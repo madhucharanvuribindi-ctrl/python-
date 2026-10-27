@@ -1,0 +1,81 @@
+"""
+Simple University Scholarship Allocation
+
+Example rules (change these values to match your university):
+- Average marks must be at least 70%.
+- Every subject mark must be at least 50%.
+- Attendance must be at least 75%.
+- Annual family income must be no more than Rs. 300,000.
+- Scholarships go to the top 3 eligible students.
+
+Tie-break rules, in order:
+1. Higher average marks
+2. Higher attendance
+3. Lower family income
+4. Student name in alphabetical order
+"""
+
+MIN_AVERAGE = 70
+MIN_SUBJECT_MARK = 50
+MIN_ATTENDANCE = 75
+MAX_FAMILY_INCOME = 300000
+SCHOLARSHIP_SLOTS = 3
+
+# Each student's marks are listed in the same subject order.
+students = [
+    {"name": "Asha", "marks": [88, 82, 91], "attendance": 90, "income": 200000},
+    {"name": "Ravi", "marks": [80, 80, 80], "attendance": 85, "income": 250000},
+    {"name": "Meera", "marks": [75, 78, 80], "attendance": 92, "income": 180000},
+    {"name": "Dev", "marks": [45, 95, 92], "attendance": 95, "income": 100000},
+    {"name": "Isha", "marks": [79, 81, 80], "attendance": 85, "income": 220000},
+    {"name": "Arun", "marks": [90, 88, 85], "attendance": 70, "income": 150000},
+]
+
+eligible_students = []
+
+for student in students:
+    average = sum(student["marks"]) / len(student["marks"])
+    student["average"] = average
+
+    meets_subject_rule = all(
+        mark >= MIN_SUBJECT_MARK for mark in student["marks"]
+    )
+    meets_other_rules = (
+        average >= MIN_AVERAGE
+        and student["attendance"] >= MIN_ATTENDANCE
+        and student["income"] <= MAX_FAMILY_INCOME
+    )
+
+    if meets_subject_rule and meets_other_rules:
+        eligible_students.append(student)
+
+# Sort from best to lowest using the stated tie-break rules.
+eligible_students.sort(
+    key=lambda student: (
+        -student["average"],
+        -student["attendance"],
+        student["income"],
+        student["name"].lower(),
+    )
+)
+
+print("SCHOLARSHIP RESULTS")
+print("-" * 50)
+
+if not eligible_students:
+    print("No students meet the scholarship requirements.")
+else:
+    for rank, student in enumerate(eligible_students, start=1):
+        if rank <= SCHOLARSHIP_SLOTS:
+            result = "AWARDED"
+        else:
+            result = "WAITLISTED"
+
+        print(
+            rank,
+            student["name"],
+            "- Average:", round(student["average"], 2),
+            "- Attendance:", str(student["attendance"]) + "%",
+            "- Income: Rs.", student["income"],
+            "-", result,
+        )
