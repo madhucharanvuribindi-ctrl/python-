@@ -1,0 +1,41 @@
+print("Campus Event Entry")
+
+# Seats are stored in rows. "Empty" means the seat is available.
+seats = [
+    ["Empty", "Empty", "Empty"],
+    ["Empty", "Empty", "Empty"],
+]
+
+registered_ids = ["A101", "A102", "A103", "A104", "A105"]
+ticket_ids = ["A101", "A102", "A101", "X999", "A104"]
+entered_ids = []
+
+for ticket in ticket_ids:
+    if ticket not in registered_ids:
+        print(ticket, "- Invalid ticket")
+    elif ticket in entered_ids:
+        print(ticket, "- Duplicate entry")
+    else:
+        entered_ids.append(ticket)
+        seat_found = False
+
+        for row in range(len(seats)):
+            for seat in range(len(seats[row])):
+                if seats[row][seat] == "Empty" and not seat_found:
+                    seats[row][seat] = ticket
+                    print(ticket, "- Allowed, row", row + 1, "seat", seat + 1)
+                    seat_found = True
+
+        if not seat_found:
+            print(ticket, "- No seats available")
+
+available_seats = 0
+for row in seats:
+    for seat in row:
+        if seat == "Empty":
+            available_seats += 1
+
+print("\nAvailable seats:", available_seats)
+print("Seating plan:")
+for row in seats:
+    print(row)
