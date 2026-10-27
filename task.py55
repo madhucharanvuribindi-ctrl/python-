@@ -1,0 +1,18 @@
+print("Student Marks Calculator")
+
+name = input("Enter your name: ")
+mark1 = int(input("Enter marks for subject 1: "))
+mark2 = int(input("Enter marks for subject 2: "))
+mark3 = int(input("Enter marks for subject 3: "))
+
+total = mark1 + mark2 + mark3
+average = total / 3
+
+print("Student:", name)
+print("Total marks:", total)
+print("Average marks:", average)
+
+if average >= 40:
+    print("Result: Pass")
+else:
+    print("Result: Fail")
