@@ -1,0 +1,45 @@
+"""
+Multi-Currency Travel Budget Analysis
+Example exchange rates: rupees for 1 unit of foreign currency.
+"""
+
+rates = {
+    "INR": 1,
+    "USD": 83,
+    "EUR": 90,
+}
+
+conversion_fee_percent = 2
+budget = 50000
+
+# Category, currency, amount
+expenses = [
+    ("Hotel", "USD", 200),
+    ("Food", "EUR", 80),
+    ("Transport", "INR", 5000),
+    ("Food", "USD", 40),
+    ("Activities", "EUR", 50),
+]
+
+category_totals = {}
+total = 0
+
+for category, currency, amount in expenses:
+    amount_in_rupees = amount * rates[currency]
+    fee = amount_in_rupees * conversion_fee_percent / 100
+    final_amount = amount_in_rupees + fee
+
+    total = total + final_amount
+    category_totals[category] = category_totals.get(category, 0) + final_amount
+
+    print(category, ":", currency, amount, "=", round(final_amount, 2), "rupees")
+
+print("\nTotal spending:", round(total, 2), "rupees")
+
+if total <= budget:
+    print("Within budget. Remaining:", round(budget - total, 2), "rupees")
+else:
+    print("Over budget by:", round(total - budget, 2), "rupees")
+
+largest_category = max(category_totals, key=category_totals.get)
+print("Largest expense category:", largest_category)
